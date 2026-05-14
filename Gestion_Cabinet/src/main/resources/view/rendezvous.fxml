@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox prefHeight="750.0" prefWidth="1200.0" styleClass="main-root" stylesheets="@../style.css"
+      xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="example.Controller.RendezVousController">
+   <children>
+
+      <!-- SIDEBAR -->
+      <VBox prefWidth="280.0" styleClass="card, sidebar-card">
+         <HBox.margin><Insets bottom="20.0" left="20.0" top="20.0"/></HBox.margin>
+         <children>
+            <VBox alignment="CENTER" spacing="10.0">
+               <padding><Insets bottom="30.0" top="30.0"/></padding>
+               <children>
+                  <Label styleClass="sidebar-app-name" text="MediCab"/>
+                  <Label style="-fx-text-fill: #94a3b8; -fx-font-size: 13;" text="Cabinet Médical"/>
+               </children>
+            </VBox>
+            <Separator prefWidth="200.0"><VBox.margin><Insets left="20.0" right="20.0"/></VBox.margin></Separator>
+            <VBox spacing="10.0" VBox.vgrow="ALWAYS">
+               <padding><Insets left="15.0" right="15.0" top="30.0"/></padding>
+               <children>
+                  <Label style="-fx-text-fill: #b0b0b0; -fx-font-weight: bold; -fx-font-size: 11;" text="MENU">
+                     <VBox.margin><Insets left="10.0"/></VBox.margin>
+                  </Label>
+                  <Button alignment="BASELINE_LEFT" maxWidth="Infinity" onAction="#allerDashboard"  styleClass="nav-btn"        text="📊   Dashboard"/>
+                  <Button alignment="BASELINE_LEFT" maxWidth="Infinity" onAction="#allerPatients"   styleClass="nav-btn"        text="👤   Patients"/>
+                  <Button alignment="BASELINE_LEFT" maxWidth="Infinity" onAction="#allerMaladies"   styleClass="nav-btn"        text="📋   Maladies"/>
+                  <Button alignment="BASELINE_LEFT" maxWidth="Infinity" onAction="#allerRendezVous" styleClass="nav-btn-active" text="📅   Rendez-vous"/>
+               </children>
+            </VBox>
+            <VBox spacing="15.0" style="-fx-background-color: #f8fafc; -fx-background-radius: 0 0 15 15;">
+               <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/></padding>
+               <children>
+                  <HBox alignment="CENTER_LEFT" spacing="12.0">
+                     <children>
+                        <Label fx:id="initialesLabel" styleClass="user-avatar" text="??"/>
+                        <VBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label fx:id="nomUtilisateurLabel" style="-fx-font-weight: bold; -fx-text-fill: #1e293b;" text="Chargement..."/>
+                              <Label fx:id="roleLabel" style="-fx-font-size: 11; -fx-text-fill: #64748b;" text="Rôle"/>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Button maxWidth="Infinity" onAction="#deconnexion" styleClass="btn-logout-sidebar" text="🚪 Déconnexion"/>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+
+      <!-- CONTENU PRINCIPAL -->
+      <VBox spacing="20.0" HBox.hgrow="ALWAYS">
+         <padding><Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/></padding>
+         <children>
+
+            <!-- Titre + Recherche -->
+            <HBox alignment="CENTER_LEFT" spacing="20.0">
+               <children>
+                  <VBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="page-title" text="Gestion des Rendez-vous"/>
+                        <Label fx:id="compteurLabel" style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="0 rendez-vous au total"/>
+                     </children>
+                  </VBox>
+                  <HBox spacing="8.0" alignment="CENTER_RIGHT">
+                     <children>
+                        <TextField fx:id="rechercheField" promptText="🔍  Rechercher par date (format yyyy-mm-dd)" prefWidth="300.0" styleClass="search-field"/>
+                        <Button onAction="#afficherTousRendezVousParDate" styleClass="btn-secondary" text="Tout afficher"/>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+
+            <!-- Formulaire -->
+            <VBox styleClass="card" spacing="14.0">
+               <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/></padding>
+               <children>
+
+                  <!-- Ligne 1 : Patient + Date -->
+                  <HBox spacing="15.0">
+                     <children>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label style="-fx-font-weight: bold; -fx-text-fill: #374151;" text="Date *"/>
+                              <DatePicker fx:id="datePicker" maxWidth="Infinity" promptText="JJ/MM/AAAA"/>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+
+                  <!-- Ligne 2 : Maladie + Heure -->
+                  <HBox spacing="15.0">
+                     <children>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label style="-fx-font-weight: bold; -fx-text-fill: #374151;" text="Maladie (optionnel)"/>
+                              <ComboBox fx:id="maladieComboBox" maxWidth="Infinity" promptText="Aucune maladie sélectionnée"/>
+                           </children>
+                        </VBox>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label style="-fx-font-weight: bold; -fx-text-fill: #374151;" text="Heure * (HH:MM)"/>
+                              <TextField fx:id="heureField" maxWidth="Infinity" promptText="ex: 09:30"/>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+
+                  <!-- Ligne 3 : Statut + Motif -->
+                  <HBox spacing="15.0">
+                     <children>
+                        <VBox spacing="5.0" prefWidth="200">
+                           <children>
+                              <Label style="-fx-font-weight: bold; -fx-text-fill: #374151;" text="Statut *"/>
+                              <ComboBox fx:id="statutComboBox" maxWidth="Infinity"/>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+
+                  <!-- Message validation -->
+                  <Label fx:id="validationLabel" text="" style="-fx-font-weight: bold;" visible="false"/>
+
+                  <!-- Boutons -->
+                  <HBox spacing="10.0">
+                     <children>
+                        <Button onAction="#telechargerConsultation"  styleClass="btn-success" text="Télécharcher Pdf"/>
+                        <Button fx:id="ajouterBtn" onAction="#ajouterRendezVous"   styleClass="btn-primary"   text="+ Enregistrer"/>
+                        <Button fx:id="modifierBtn" onAction="#modifierRendezVous"  styleClass="btn-modifier"  text="✏ Modifier"/>
+                        <Button fx:id="supprimerBtn" onAction="#supprimerRendezVous" styleClass="btn-supprimer" text="🗑 Supprimer"/>
+                        <Button fx:id="viderBtn" onAction="#effacerFormulaire"   styleClass="btn-secondary" text="↺ Vider"/>
+                     </children>
+                  </HBox>
+
+               </children>
+            </VBox>
+
+            <!-- Tableau -->
+            <VBox styleClass="card" VBox.vgrow="ALWAYS">
+               <padding><Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/></padding>
+               <children>
+                  <TableView fx:id="rdvTable" VBox.vgrow="ALWAYS">
+                     <columns>
+                        <TableColumn fx:id="colPatient" text="Patient" prefWidth="180"/>
+                        <TableColumn fx:id="colMaladie" text="Maladie"  prefWidth="150"/>
+                        <TableColumn fx:id="colDate"    text="Date"     prefWidth="100"/>
+                        <TableColumn fx:id="colHeure"   text="Heure"    prefWidth="80"/>
+                         <TableColumn fx:id="colStatut"  text="Statut"   prefWidth="100"/>
+                     </columns>
+                     <placeholder>
+                        <Label text="Aucun rendez-vous enregistré." style="-fx-text-fill: #94a3b8;"/>
+                     </placeholder>
+                  </TableView>
+               </children>
+            </VBox>
+
+         </children>
+      </VBox>
+   </children>
+</HBox>

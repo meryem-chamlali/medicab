@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox prefHeight="750.0" prefWidth="1200.0" styleClass="main-root" stylesheets="@../style.css"
+      xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="example.Controller.DashboardController">
+   <children>
+
+      <!-- SIDEBAR -->
+      <VBox prefWidth="280.0" styleClass="card, sidebar-card">
+         <HBox.margin><Insets bottom="20.0" left="20.0" top="20.0"/></HBox.margin>
+         <children>
+            <VBox alignment="CENTER" spacing="10.0">
+               <padding><Insets bottom="30.0" top="30.0"/></padding>
+               <children>
+                  <Label styleClass="sidebar-app-name" text="MediCab"/>
+                  <Label style="-fx-text-fill: #94a3b8; -fx-font-size: 13;" text="Espace Administration"/>
+               </children>
+            </VBox>
+            <Separator prefWidth="200.0"><VBox.margin><Insets left="20.0" right="20.0"/></VBox.margin></Separator>
+            <VBox spacing="10.0" VBox.vgrow="ALWAYS">
+               <padding><Insets left="15.0" right="15.0" top="30.0"/></padding>
+               <children>
+                  <Label style="-fx-text-fill: #b0b0b0; -fx-font-weight: bold; -fx-font-size: 11;" text="MENU PRINCIPAL">
+                     <VBox.margin><Insets left="10.0"/></VBox.margin>
+                  </Label>
+                  <Button alignment="BASELINE_LEFT" maxWidth="Infinity" onAction="#allerDashboard"  styleClass="nav-btn-active" text="📊   Tableau de bord"/>
+                  <Button alignment="BASELINE_LEFT" maxWidth="Infinity" onAction="#allerPatients"   styleClass="nav-btn"        text="👤   Gestion Patients"/>
+                  <Button alignment="BASELINE_LEFT" maxWidth="Infinity" onAction="#allerMaladies"   styleClass="nav-btn"        text="📋   Maladies"/>
+                  <Button alignment="BASELINE_LEFT" maxWidth="Infinity" onAction="#allerRendezVous" styleClass="nav-btn"        text="📅   Rendez-vous"/>
+               </children>
+            </VBox>
+            <VBox spacing="15.0" style="-fx-background-color: #f8fafc; -fx-background-radius: 0 0 15 15;">
+               <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/></padding>
+               <children>
+                  <HBox alignment="CENTER_LEFT" spacing="12.0">
+                     <children>
+                        <Label fx:id="initialesLabel" styleClass="user-avatar" text="??"/>
+                        <VBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label fx:id="nomUtilisateurLabel" style="-fx-font-weight: bold; -fx-text-fill: #1e293b;" text="Chargement..."/>
+                              <Label fx:id="roleLabel" style="-fx-font-size: 11; -fx-text-fill: #64748b;" text="Rôle"/>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Button maxWidth="Infinity" onAction="#deconnexion" styleClass="btn-logout-sidebar" text="🚪 Déconnexion"/>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+
+      <!-- CONTENU -->
+      <VBox spacing="20.0" HBox.hgrow="ALWAYS">
+         <padding><Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/></padding>
+         <children>
+
+            <!-- Titre -->
+            <VBox spacing="4.0">
+               <children>
+                  <Label styleClass="page-title" text="Vue d'ensemble"/>
+                  <Label style="-fx-text-fill: #64748b; -fx-font-size: 13;" text="Bienvenue sur votre tableau de bord MediCab."/>
+               </children>
+            </VBox>
+
+            <!-- Cartes stat -->
+            <HBox spacing="16.0">
+               <children>
+                  <VBox prefWidth="250.0" spacing="12.0" styleClass="card">
+                     <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/></padding>
+                     <children>
+                        <Label style="-fx-text-fill: #64748b; -fx-font-weight: bold; -fx-font-size: 11;" text="PATIENTS ENREGISTRÉS"/>
+                        <HBox alignment="CENTER_LEFT" spacing="16.0">
+                           <children>
+                              <Label fx:id="totalPatientsLabel" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #4E73DF;" text="0"/>
+                              <Label style="-fx-background-color: #EEF2FF; -fx-text-fill: #4E73DF; -fx-padding: 4 10; -fx-background-radius: 20; -fx-font-size: 11;" text="Total"/>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefWidth="250.0" spacing="12.0" styleClass="card">
+                     <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/></padding>
+                     <children>
+                        <Label style="-fx-text-fill: #64748b; -fx-font-weight: bold; -fx-font-size: 11;" text="MALADIES RÉFÉRENCÉES"/>
+                        <HBox alignment="CENTER_LEFT" spacing="16.0">
+                           <children>
+                              <Label fx:id="totalMaladiesLabel" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #f59e0b;" text="0"/>
+                              <Label style="-fx-background-color: #fffbeb; -fx-text-fill: #b45309; -fx-padding: 4 10; -fx-background-radius: 20; -fx-font-size: 11;" text="Total"/>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefWidth="250.0" spacing="12.0" styleClass="card">
+                     <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/></padding>
+                     <children>
+                        <Label style="-fx-text-fill: #64748b; -fx-font-weight: bold; -fx-font-size: 11;" text="RENDEZ-VOUS AUJOURD'HUI"/>
+                        <HBox alignment="CENTER_LEFT" spacing="16.0">
+                           <children>
+                              <Label fx:id="totalRdvLabel" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #1f77b4;" text="0"/>
+                              <Label style="-fx-background-color: #e0f2fe; -fx-text-fill: #0369a1; -fx-padding: 4 10; -fx-background-radius: 20; -fx-font-size: 11;" text="Aujourd'hui"/>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <!-- Tableau RDV avec colonne Maladie -->
+            <VBox spacing="12.0" styleClass="card" VBox.vgrow="ALWAYS">
+               <padding><Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/></padding>
+               <children>
+                  <Label style="-fx-font-weight: bold; -fx-text-fill: #1e293b; -fx-font-size: 15;" text="Rendez-vous d'aujourd'hui"/>
+                  <TableView fx:id="rdvTable" prefHeight="350.0" VBox.vgrow="ALWAYS">
+                     <columns>
+                        <TableColumn fx:id="colHeure"   text="Heure"   prefWidth="100"/>
+                        <TableColumn fx:id="colPatient" text="Patient" prefWidth="200"/>
+                        <TableColumn fx:id="colMaladie" text="Maladie" prefWidth="180"/>
+                     </columns>
+                     <placeholder>
+                        <Label text="Aucun rendez-vous aujourd'hui." style="-fx-text-fill: #94a3b8;"/>
+                     </placeholder>
+                  </TableView>
+               </children>
+            </VBox>
+
+         </children>
+      </VBox>
+   </children>
+</HBox>
